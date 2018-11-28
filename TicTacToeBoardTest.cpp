@@ -20,3 +20,22 @@ TEST(TicTacToeBoardTest, unitTestName)
 	ASSERT_TRUE(true);
 }
 */
+
+TEST(TicTacToeBoardTest, toggleTurnFromX)
+{
+        TicTacToeBoard obj;
+        Piece outcome = obj.toggleTurn();
+        Piece expected_value = O;
+	ASSERT_EQ(outcome,expected_value);
+}
+
+/*
+TEST(TicTacToeBoardTest, toggleTurnFromO)
+{
+        TicTacToeBoard obj;
+        obj.turn = O;
+        Piece outcome = obj.toggleTurn();
+        Piece expected_value = X;
+	ASSERT_EQ(outcome,expected_value);
+}
+*/
