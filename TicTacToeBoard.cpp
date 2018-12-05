@@ -25,7 +25,6 @@ Piece TicTacToeBoard::toggleTurn()
   }
   else
     turn = X;
-
   return turn;
 }
 
@@ -40,7 +39,7 @@ Piece TicTacToeBoard::toggleTurn()
 **/ 
 Piece TicTacToeBoard::placePiece(int row, int column)
 {
-  Piece cur_turn = turn;
+  Piece cur_piece = turn;
   if (row >= BOARDSIZE || column >= BOARDSIZE)
   {
     return Invalid;
@@ -51,9 +50,9 @@ Piece TicTacToeBoard::placePiece(int row, int column)
   }
   else
   {
-    board[row][column] = cur_turn;
+    board[row][column] = cur_piece;
     toggleTurn();
-    return cur_turn;
+    return cur_piece;
   }
 }
 
@@ -63,7 +62,11 @@ Piece TicTacToeBoard::placePiece(int row, int column)
 **/
 Piece TicTacToeBoard::getPiece(int row, int column)
 {
-  return Invalid;
+  if (row >= BOARDSIZE || column >= BOARDSIZE)
+  {
+    return Invalid;
+  } 
+  return board[row][column];
 }
 
 /**
@@ -72,5 +75,55 @@ Piece TicTacToeBoard::getPiece(int row, int column)
 **/
 Piece TicTacToeBoard::getWinner()
 {
-  return Invalid;
+  Piece winner;
+
+  //Check to see if any of the rows are the same
+  for (int i = 0; i <= 2; i++)
+  {
+    if (board[i][0]==board[i][1] && board[i][1]==board[i][2] && board[i][0]!=Blank)
+    {
+      winner = board[i][0];
+      return winner;
+    }
+  }
+
+  //Check to see if any of the columns are the same
+  for (int i = 0; i <= 2; i++)
+  {
+    if (board[0][i]==board[1][i] && board[1][i]==board[2][i] && board[0][i]!=Blank)
+    {
+      winner = board[0][i];
+      return winner;
+    }
+  }
+
+  //Check the diagonal from the top left corner
+  if (board[0][0]==board[1][1] && board[1][1]==board[2][2] && board[0][0]!=Blank)
+  {
+    winner = board[0][0];
+    return winner;
+  }
+
+  //Check the diagonal from the top right corner
+  if (board[0][2]==board[1][1] && board[1][1]==board[2][0] && board [0][2]!=Blank)
+  {
+    winner = board[0][2];
+    return winner;
+  }
+
+  // Check to see if there are any blank spaces and game isn't over
+  for (int i = 0; i <= BOARDSIZE; i++)
+  {
+    for (int j = 0; j <= BOARDSIZE; j++)
+    {
+      if (board[i][j] == Blank)
+      {
+        return Invalid;
+      }
+    }
+  }
+
+  //No winner so we have a tie!
+  winner = Blank;
+  return winner;
 }
